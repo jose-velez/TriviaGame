@@ -1,4 +1,56 @@
 body
 {
 	background-image: url('../images/deathStar.jpg');
+	min-height: 500px;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Pangolin', cursive;
+}
+
+
+img
+{
+	width: 50%;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+h2
+{
+	font-family: 'Pangolin', cursive;
+	color: #fff4f4;
+}
+button
+{
+	color: #000000;
+	margin: 10px;
+	padding: 10px;
+}
+.instructions
+{
+	font-family: 'Pangolin', cursive;
+	/*background-color:#668fe2;*/
+	border-radius: 25px;
+	/*background: linear-gradient(-90deg, #202de5, #a5abff); */
+}						
+
+.container
+{
+	background-color:#668fe2;
+	background: linear-gradient(-90deg, #e51010, #000000); 
+	margin-top: 50px;
+	opacity: 0.9;
+}
+
+.title
+{
+	font-family: 'Pangolin', cursive;
+	margin-top: 50px;
+	padding: 20px;
+	background-color:#668fe2;
+	border-radius: 25px;
+	background: linear-gradient(-90deg, #e51010, #000000); 
+	margin-top: 50px;
+	color: #fff4f4;
 }

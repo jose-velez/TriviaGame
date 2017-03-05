@@ -108,12 +108,14 @@ function gameInit(trivia)
 	var correct=0;
 	var wrong=0;
 	count= 0;
+	var song = document.getElementById("song");
 	var div = $("<div>", {id: "starGame"});
-	div.append("<button>Start Game</button>");
+	div.html("<button>Start Game</button>");
 	$("#question").append(div);
 	$("button").on("click", function()
 	{
 		$("#starGame").hide();
+		song.play();
 		console.log(indexQuestion);
 		displayQuestion(trivia);
 	});
@@ -211,23 +213,19 @@ function decrement()
 		showAnswer(trivia);
 	}
 }
+//Function to end the game 
 function showStats()
 {
 	$("#question").html("<h2> You had " + correct +" questions correct and  "+ wrong + " questions incorrect</h2>");
+	var div = $("<div>", {id: "starGame"});
+	$("#question").append("<button>Play again</button>");
+	$("button").on("click", function()
+	{
+		$("#starGame").hide();
+		gameInit();
+	});
+
+
 }
-
-// Get the current and display it to the screen
-
-
-
-// Create a function to choose a random question and display to the user
-
-
-
-// Create a function to display the timer 
-
-
-
-// Create the function to determine if the answer is correct or wrong
 
 
