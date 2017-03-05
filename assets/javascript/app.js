@@ -11,17 +11,12 @@
 ////////////////////////////
 
 
-
-
-
-$(document).ready(function(){
-
 var indexQuestion;
 var correct = 0;
 var wrong = 0;
-
-
-
+var intervalId;
+var timer = 20;
+var count = 0;
 // Create an object to store the questions of the game
 var trivia = [
 {
@@ -56,7 +51,7 @@ var trivia = [
 },
 {
 	"question" : "Who killed the Emperor?",
-	"images" : "assets/images/darthVader",
+	"images" : "assets/images/darthVader.jpg",
 	"choices" : ["Luke", "Palpatine", "Voldemort", "Darth Vader"],
 	"correct" : "Darth Vader",
 },
@@ -82,11 +77,19 @@ var trivia = [
 
 {
 	"question" : "Who stole the Death Star plans",
-	"images" : "assets/images/rogueOne",
+	"images" : "assets/images/rogueOne.png",
 	"choices" : ["The Rebellion", "Leia and R2-D2", "Rogue One", "Luke Skywalker"],
 	"correct" : "Rogue One",
 }
 ];
+
+
+
+$(document).ready(function(){
+
+
+
+
 
 
 
@@ -104,60 +107,76 @@ function gameInit(trivia)
 {
 	var correct=0;
 	var wrong=0;
+	count= 0;
 	var div = $("<div>", {id: "starGame"});
 	div.append("<button>Start Game</button>");
 	$("#question").append(div);
 	$("button").on("click", function()
 	{
 		$("#starGame").hide();
-		indexQuestion = Math.floor(Math.random() * 10);
 		console.log(indexQuestion);
-		
-		console.log(trivia[indexQuestion].question);
-		console.log(trivia[indexQuestion].choices);
-		console.log(trivia[indexQuestion].correct);
-
 		displayQuestion(trivia);
 	});
 
 	
 }
 
-function showAnswer()
+function showAnswer(trivia)
 {
+	clearInterval(intervalId);
+	timer = 20;
+	$("#question").html("The Right Answer is: " + trivia[indexQuestion].correct);
+	var image = $("#img");
+	var currentImg = $("<img src='" + trivia[indexQuestion].images + "'/>");
+	image.html(currentImg);
+	image.show();
+	$("#correct").html("Correct: "+ correct);
+	$("#incorrect").html("Incorrect: " + wrong);
+	setTimeout(displayQuestion, 3000);
+	count++;
 
 }
 
-function displayQuestion(trivia)
+function displayQuestion()
 {
+	indexQuestion = Math.floor(Math.random() * 10);
+	console.log(trivia[indexQuestion].question);
+	console.log(trivia[indexQuestion].choices);
+	console.log(trivia[indexQuestion].correct);
 	// Create a new div to insert the question 
+	$("#img").hide();
 	var div = $("<div>");
-	div.append("<h2>" + trivia[indexQuestion].question + "</h2>");
-		for(var i= 0; i < 4; i++)
-		{
-			div.append("<button>" + trivia[indexQuestion].choices[i] + "</button> <br>");
-		
-		}
-
-	$("#question").html(div);
-	// on click function to choose the right answer 
-	$("button").on("click", function()
+	if(count ===10)
 	{
-		if($(this).text() === trivia[indexQuestion].correct)
+		showStats();
+	}
+	else
+	{
+		div.append("<h2>" + trivia[indexQuestion].question + "</h2>");
+			for(var i= 0; i < 4; i++)
+			{
+				div.append("<button>" + trivia[indexQuestion].choices[i] + "</button> <br>");
+			
+			}
+		run();
+		
+		$("#question").html(div);
+		// on click function to choose the right answer 
+		$("button").on("click", function()
 		{
-			var image = $("#img");
-			var currentImg = $("<img src='" + trivia[indexQuestion].images + "'/>");
-			image.append(currentImg);
-			alert("you got it");
-			//correct++;
-			nextQuestion(trivia);
-		}
-		else
-		{
-			//wrong++;
-			alert("try again");
-		}
-	});
+			if($(this).text() === trivia[indexQuestion].correct)
+			{
+				
+				correct++;
+				showAnswer(trivia);
+			}
+			else
+			{
+				wrong++;
+				showAnswer(trivia);
+			}
+		});
+	}
 
 }
 
@@ -173,6 +192,30 @@ console.log(trivia[indexQuestion].choices);
 
 displayQuestion(trivia);
 }
+
+//Function to set the timer
+function run()
+{
+	intervalId = setInterval(decrement, 1000);
+}
+
+//Function to decrement the seconds and display it to the user 
+function decrement()
+{
+	
+	timer--
+	$("#timer").html("Time Left: " + timer);
+	if(timer===0)
+	{
+		wrong++;
+		showAnswer(trivia);
+	}
+}
+function showStats()
+{
+	$("#question").html("<h2> You had " + correct +" questions correct and  "+ wrong + " questions incorrect</h2>");
+}
+
 // Get the current and display it to the screen
 
 
